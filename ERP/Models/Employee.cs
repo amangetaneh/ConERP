@@ -13,8 +13,6 @@ namespace ERP.Models
 
         public string LName { get; set; } = string.Empty;
 
-        public string EmpProfile { get; set; } = string.Empty;
-
         public string Position { get; set; } = string.Empty;
 
     }

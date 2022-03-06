@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ERP.Context
 {
-    public class DataContext
-        : DbContext
+    public class DataContext: DbContext
     {
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
@@ -12,19 +11,59 @@ namespace ERP.Context
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<TransferItem>()
+                .HasKey(o => new { o.TransferId, o.ItemId });
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.ReceiveStore)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.SendStore)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.RequestedBy)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.ReceivedBy)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.DeliveredBy)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Transfer>()
+                    .HasOne(t => t.ApprovedBy)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+        }
+
+
         public DbSet<ConsumableItem> ConsumableItems { get; set; }
 
         public DbSet<NonConsumableItem> NonConsumableItems { get; set; }
 
-        public DbSet<IssuedItem> IssuedItems { get; set; }
+        //public DbSet<IssuedItem> IssuedItems { get; set; }
 
-        public DbSet<PurchasedItem> PurchasedItems { get; set; }
+        //public DbSet<PurchasedItem> PurchasedItems { get; set; }
 
-        public DbSet<ReceivedItem> ReceivedItems { get; set; }
+        //public DbSet<ReceivedItem> ReceivedItems { get; set; }
 
         public DbSet<Transfer> Transfers { get; set; }
+
+        public DbSet<TransferItem> TransferItems { get; set; }
         
-        public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
+        //public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
 

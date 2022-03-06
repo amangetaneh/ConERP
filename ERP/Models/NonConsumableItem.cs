@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ERP.Models
 {
-    [Keyless]
     public class NonConsumableItem
     {
+        [Key]
+        public int ItemId { get; set; }
+
+        [ForeignKey("ItemId")]
         public Item Item { get; set; }
 
         public string Model { get; set; } = string.Empty;
@@ -13,7 +17,7 @@ namespace ERP.Models
 
         public string AssetNo { get; set; } = string.Empty;
 
-        public string ItemUnit { get; set; } = string.Empty;
+        public string Unit { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
     }

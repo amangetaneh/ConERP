@@ -11,5 +11,7 @@ namespace ERP.Models
 
         public Site Site { get; set; }
 
+        public int SiteId { get; set; }
+
     }
 }
